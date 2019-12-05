@@ -6,16 +6,16 @@ class Cli
     end
 
     def welcome_menu 
-        puts "Please enter your name".black.on_light_green.blink
+        puts "Please enter your name".black.on_light_green
         user_input = gets.chomp.upcase
         @user = User.create(name: user_input)
-        puts "Welcome, to Gaper Guide, #{@user.name}!".black.on_light_green.blink
+        puts "Welcome, to Gaper Guide, #{@user.name}!".black.on_light_green
         choice_menu
     end
 
     def choice_menu
         prompt = TTY::Prompt.new
-        choice = prompt.select("Please choose your resort from the list below!".black.on_light_green.blink, ["Breck", "Vail", "Beaver Creek", "Keystone", "Park City"])
+        choice = prompt.select("Please choose your resort from the list below!".black.on_light_green, ["Breck", "Vail", "Beaver Creek", "Keystone", "Park City"])
         @actual = Resort.find{|resort_name| resort_name.name == "#{choice}"}
         @resort = UserResort.create(user: @user, resort: @actual)
         resort_info_choice
@@ -23,22 +23,22 @@ class Cli
 
     def resort_info_choice
         prompt = TTY::Prompt.new
-        option = prompt.select("Choose an option below for more info".black.on_light_green.blink, ["Ticket Prices", "Lessons", "Gear", "Hotels", "Ski Patrol Emergency Number", "Go Back"])
+        option = prompt.select("Choose an option below for more info".black.on_light_green, ["Ticket Prices", "Lessons", "Gear", "Hotels", "Ski Patrol Emergency Number", "Go Back"])
         case option
         when "Ticket Prices"
             puts @actual.tickets.map{|info| info.name + " = " + info.price}
         when "Lessons"
             puts @actual.lessons.map{|info| info.name + " = " + info.price}
         when "Gear"
-            puts "Below is a recommended list of gear:".black.on_light_green.blink
+            puts "Below is a recommended list of gear:".black.on_light_green
             puts @actual.gears.map{|info| info.list}
             linky =  (@actual.gears.map{|links| links.link}).join
-            puts TTY::Link.link_to("Gear Near You".black.on_light_green.blink, "#{linky}".blue.bold)
+            puts TTY::Link.link_to("Gear Near You".black.on_light_green, "#{linky}".blue.bold)
         when "Hotels"
             puts "Hotels Near You".red.bold
             puts @actual.hotels.map{|info| info.name + " at " + "$" + info.price + " per night. This hotel has " + (info.rating).to_s + " stars."}
             linky = @actual.hotels.map{|links| links.link}.join
-            puts TTY::Link.link_to("Hotel Website".black.on_light_green.blink, "#{linky}".blue.bold)
+            puts TTY::Link.link_to("Hotel Website".black.on_light_green, "#{linky}".blue.bold)
             highest_rate = @actual.hotels.max_by{|info| info.rating}
             highest_name = highest_rate.name
             puts "The highest rated hotel is #{highest_name}.".red.bold
@@ -56,7 +56,7 @@ class Cli
 
     def hotel_choice
         prompt = TTY::Prompt.new
-        your_hotel = prompt.select("Choose the hotel whose price is right".black.on_yellow.blink, ["Cheapest", "Middlest", "Expensivest", "Back to Resort Info", "EXIT"])
+        your_hotel = prompt.select("Choose the hotel whose price is right".black.on_yellow, ["Cheapest", "Middlest", "Expensivest", "Back to Resort Info", "EXIT"])
         case your_hotel
         when "Cheapest"
             cheapest = @actual.hotels.min_by{|price| price.price.to_i}
@@ -83,7 +83,7 @@ class Cli
 
     def rollbacker
         prompt = TTY::Prompt.new
-        rollbach = prompt.select("Choose an option below".black.on_light_green.blink, ["Back to Info", "Resorts", "EXIT"])
+        rollbach = prompt.select("Choose an option below".black.on_light_green, ["Back to Info", "Resorts", "EXIT"])
         if rollbach == "Back to Info"
             resort_info_choice
         elsif rollbach == "Resorts" 
