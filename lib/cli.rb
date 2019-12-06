@@ -31,7 +31,9 @@ class Cli
             puts @actual.lessons.map{|info| info.name + " = " + info.price}
         when "Gear"
             puts "Below is a recommended list of gear:".black.on_light_green
-            puts @actual.gears.map{|info| info.list}
+            needed_gear = @actual.gears.map{|info| info.list}[0].split(", ")
+            your_gear = prompt.multi_select("Select the gear you need! (press space to choose/return to finish)", needed_gear)
+            puts "Here is the gear you need: #{your_gear.join(", ")}".bold.blue.on_white
             linky =  (@actual.gears.map{|links| links.link}).join
             puts TTY::Link.link_to("Gear Near You".black.on_light_green, "#{linky}".blue.bold)
         when "Hotels"
@@ -59,21 +61,22 @@ class Cli
         your_hotel = prompt.select("Choose the hotel whose price is right".black.on_yellow, ["Cheapest", "Middlest", "Expensivest", "Back to Resort Info", "EXIT"])
         case your_hotel
         when "Cheapest"
+            binding.pry
             cheapest = @actual.hotels.min_by{|price| price.price.to_i}
+            @actual.hotels.select{|amount| amount != cheapest}.each{|deletion| deletion.destroy}
             puts "Your hotel is #{cheapest.name}."
-            @cheap = Hotel.create(name: cheapest.name)
-            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{@cheap.name}!".blue.bold
+            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{cheapest.name}!".blue.bold
         when "Middlest"
             middlest = (@actual.hotels.map{|price| price.price.to_i}).sort
             names = @actual.hotels.select{|name| name.price.to_i == middlest[1]}
+             @actual.hotels.select{|amount| amount != middlest}.each{|deletion| deletion.destroy}
             puts "Your hotel is #{names[0].name}."
-            @middle = Hotel.create(name: names[0].name)
-            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{@middle.name}!".blue.bold
+            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{names[0].name}!".blue.bold
         when "Expensivest"
             expensivest = @actual.hotels.max_by{|price| price.price.to_i}
+            @actual.hotels.select{|amount| amount != expensivest}.each{|deletion| deletion.destroy}
             puts "Your hotel is #{expensivest.name}."
-            @expensive = Hotel.create(name: expensivest.name)
-            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{@expensive.name}!".blue.bold
+            puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{expensivest.name}!".blue.bold
         when "EXIT"
           exit
         else
