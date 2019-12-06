@@ -47,6 +47,6 @@ Operation Overview:
     An Epic Mountain API was used to call the Emergency Ski Patrol Phone number
 
     Menus throughout allow the user to return to previous menus or to exit the app 
-  
- Link to Video - https://youtu.be/BNkx0qD9mt0
+    
+* [Walk Through Video](https://youtu.be/BNkx0qD9mt0)
   
