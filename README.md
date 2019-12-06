@@ -12,17 +12,17 @@ Getting Started
 
   Create a folder and clone down
 
-  Run bundle install to install the following gems
-    gem "activerecord", "~> 6.0”
+  Run bundle install to install the following gems if using Bundler
+    gem "activerecord"
     gem "pry", "~> 0.12.2”
-    gem "sinatra-activerecord", "~> 2.0”
-    gem "rake", "~> 13.0”
-    gem "sqlite3", "~> 1.4”
-    gem "require_all", "~> 3.0”
+    gem "sinatra-activerecord"
+    gem "rake"
+    gem "sqlite3"
+    gem "require_all"
     gem ‘tty-prompt'
     gem ‘tty-link'
     gem “colorize"
-    gem "rest-client", "~> 2.1”
+    gem "rest-client"
 
   Run ruby environment.rb 
 
