@@ -74,7 +74,7 @@ class Cli
             puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{names[0].name}!".blue.bold
         when "Expensivest"
             expensivest = @actual.hotels.max_by{|price| price.price.to_i}
-            @actual.hotels.select{|amount| amount != expensivest}.each{|deletion| deletion.destroy}
+             # @actual.hotels.select{|amount| amount != expensivest}.each{|deletion| deletion.destroy}
             puts "Your hotel is #{expensivest.name}."
             puts "Thank you #{@user.name} for choosing #{@actual.name} resort. Enjoy your stay at #{expensivest.name}!".blue.bold
         when "EXIT"
